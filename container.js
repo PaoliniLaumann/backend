@@ -31,7 +31,8 @@ class Container {
     this.readJson === "" ? console.log("No hay nada") : "";
 
     const matchId = this.readJson.find((product) => product.id === myId);
-    matchId == undefined ? console.log("No existe.") : console.log(matchId);
+    /* matchId == undefined ? console.log("No existe.") : console.log(matchId); */
+    return matchId === undefined ? 'This id isnt in the db' : matchId
   }
 
   deleteById(myId) {
@@ -56,15 +57,10 @@ class Container {
   }
 
   getAll() {
-    console.log(this.readJson);
+    return this.readJson
   }
 }
 
-const data = new Container();
-/* data.saveFile({name: "mila", price: "1250"})   */
-/* data.getById(1) */
-data.getAll();  
-/* data.deleteById(); */
-// data.deleteAll()
 
-// ---
+
+module.exports = Container;

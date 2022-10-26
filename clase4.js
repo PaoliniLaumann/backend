@@ -1,5 +1,5 @@
-/* const fs = require(`fs`);
-let dataRecuperada;
+const fs = require(`fs`);
+/* let dataRecuperada;
 try{
 fs.writeFileSync(`./data.txt`, `INICIO!!\n`);
 fs.appendFileSync(`./data.txt`, `OtraCosa1!!\n`);
@@ -12,16 +12,11 @@ dataRecuperada= fs.readFileSync(`./data.txt`, `utf-8` );
 }
 
 console.log(dataRecuperada)
-console.log(`2`)  */
+console.log(`2`)   */
 
-/* const fecha = new Date().toLocaleDateString()
-
-fs.writeFileSync(`./hora.txt`, `fecha()`);
-fs.readFileSync(`./hora.txt`, `utf-8` ); */
-
-/* try {
-  const date = new Date();
-
+//Ejercicio Clase
+/* const date = new Date();
+try {
   fs.writeFileSync("./fyh.txt", date.toString());
 
   const file = fs.readFileSync("./fyh.txt", "utf-8");
@@ -31,9 +26,7 @@ fs.readFileSync(`./hora.txt`, `utf-8` ); */
   console.log(err);
 } */
 
-
-
-const fs = require(`fs`);
+/* const fs = require(`fs`);
 
 console.log("1")
 fs.writeFile(`./data.txt`, `INICIO!!\n`, (err)=>{
@@ -44,13 +37,38 @@ fs.writeFile(`./data.txt`, `INICIO!!\n`, (err)=>{
     }    
 });
 
-console.log("2");
+console.log("2"); */
 /* fs.appendFile(`./data.txt`, `OtraCosa1!!\n`);
 dadadasdasd()
 fs.appendFile(`./data.txt`, `OtraCosa2!!\n`);
 
 dataRecuperada= fs.readFile(`./data.txt`, `utf-8` ); */
 
-
 /* console.log(dataRecuperada)
 console.log(`2`)  */
+
+//Async y Await
+
+async function grabarYAgregar()  {
+
+ await fs.promises.writeFile(`./prueba.txt`, `Inicioooooo!!\n`)
+  .then(() => {
+    console.log(`salio bien`);    
+  })
+  .catch((e) => {
+    console.log(`salio mal`);
+  })
+
+  await fs.promises.appendFile(`./prueba.txt`, `Agrego algo!!\n`)
+  .then(() => {
+    console.log(`salio bien`);
+  })
+  .catch((e) => {
+    console.log(`salio mal`);
+  });
+  console.log(`Ahora si termino todo`)
+};
+
+grabarYAgregar();
+
+
