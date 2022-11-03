@@ -1,31 +1,63 @@
-const express = require('express');
-const Container = require('./container');
+const express = require("express");
+const { Router } = express;
+const multer = require("multer");
 const app = express();
-const PORT = process.env.PORT || 8080;
-
-const productoContainer = new Container()
-
-const randomFunction = (limite) => {
-    return parseInt(Math.random() * limite)
-}
-
-app.get('/', (req, res) => {
-    res.send("<h1 style='color:black'>Servidor express</h1> <a href='/data'>PRODUCTOS</a> <a href='/productoRandom'>PRODUCTOS RANDOM</a>")
-})
+const router = require('./router/productsRouter')
+    
 
 
-app.get("/data", async (req, res) => {
-     res.json (await productoContainer.getAll())       
+const { itemsValidate } = require('./utils/validations')
+const port = process.env.PORT || 8080;
+const Contenedor = require("./container/container");
 
-})
+const data = new Contenedor()
 
 
-app.get("/productoRandom", async (req, res) => {
-  const db =  await productoContainer.getAll()  
-  res.json (productoContainer.getById(randomFunction(db.length)))      
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.listen(port, () => {
+    console.log(`Servidor app escuchando en el puerto http://localhost:${port}`);
 });
 
 
-app.listen(PORT, () => {
-    console.log(`Example app listening on port http://localhost:${PORT}`);
-})
+app.use('/api/products', router);
+
+app.use('/public', express.static(__dirname + '/public'));
+
+app.get('/', (req, res) => {
+    res.send('<h1>Desafio API RESTful</h1> \n <a href="/api/products">Productos</a> \n <a href="/public/index.html">formulario</a> \n');
+});
+
+app.get('/formulario', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        cb(
+            null,
+            file.fieldname +
+            '-' +
+            Date.now() +
+            '.' +
+            file.originalname.split('.').pop()
+        );
+    },
+});
+const upload = multer({ storage: storage });
+
+app.post('/uploadfile', upload.single('myFile'), (req, res) => {
+    const file = req.file;
+    if (!file) {
+        res.send({ error: true });
+    } else {
+        res.send({ success: true });
+    }
+});
+
+
+
