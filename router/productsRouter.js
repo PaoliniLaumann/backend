@@ -36,7 +36,7 @@ routerProductos.post("/", async (req, res) => {
     data.saveFile(body);
     res.send({
       success: true,
-      msj: `Producto guardado exitosamente: ${body.nombre}`,
+      msj: `Producto guardado exitosamente: ${body.name}`,
     });
   } catch {
     res.json({ error: true, msj: "No se pudo guardar el producto" });
@@ -46,9 +46,9 @@ routerProductos.post("/", async (req, res) => {
 routerProductos.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, precio, thumbnail } = req.body;
+    const { name, price, thumbnail } = req.body;
     console.log("🚀 ~ file: router.js ~ line 50 ~ routerProductos.put ~ req.body", req.body)
-    await data.updateById(id, nombre, precio, thumbnail);
+    await data.updateById(id, name, price, thumbnail);
     res.json({ succes: true });
   } catch (error) {
     res.json({ error: true, msj: "error" });

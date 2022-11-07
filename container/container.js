@@ -8,9 +8,9 @@ class Container {
 
   saveFile(object) {
     const data = {
-      nombre: object?.nombre,
+      name: object?.name,
       thumbnail: object?.thumbnail,
-      precio: object?.precio,
+      price: object?.price,
       id: this.readJson.length + 1,
     };
 
@@ -61,14 +61,14 @@ class Container {
     return this.readJson
   }
 
-  updateById = async (id, nombre, precio, thumbnail) => {
+  updateById = async (id, name, price, thumbnail) => {
 
     try {
         const products = await this.getAll();
         const item = products.find((prod) => prod.id === Number(id))
         if (item) {
-            item.nombre = nombre
-            item.precio = precio
+            item.name = name
+            item.price = price
             item.thumbnail = thumbnail
             console.log(item);
             console.log(products)
